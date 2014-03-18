@@ -5,10 +5,7 @@
  *  Execution:    java DijkstraSP input.txt s
  *  Dependencies: MyGraphMap.java IndexMinPQ.java Stack.java DirectedEdge.java
  *
- *  The code is from the book, Algorithms, 4th Edition,
- *  by Robert Sedgewick and Kevin Wayne.
- *  For more info, see http://algs4.cs.princeton.edu/
-
+ *  
  *
  *************************************************************************/
 
@@ -16,7 +13,8 @@ public class DijkstraSP {
     private double[] distTo;          // distTo[v] = distance  of shortest s->v path
     private DirectedEdge[] edgeTo;    // edgeTo[v] = last edge on shortest s->v path
     private IndexMinPQ<Double> pq;    // priority queue of vertices
-
+    static  Queue<Integer> queue1 = new Queue<Integer>();
+    
     public DijkstraSP(MyGraphMap G, int s) {
         distTo = new double[G.V()];
         edgeTo = new DirectedEdge[G.V()];
@@ -29,6 +27,7 @@ public class DijkstraSP {
         pq.insert(s, distTo[s]);
         while (!pq.isEmpty()) {
             int v = pq.delMin();
+            queue1.enqueue(v);  //put the closest vertex into the queue 
             for (DirectedEdge e : G.adj(v))
                 relax(e);
         }
@@ -43,9 +42,12 @@ public class DijkstraSP {
         if (distTo[w] > distTo[v] + e.weight()) {
             distTo[w] = distTo[v] + e.weight();
             edgeTo[w] = e;
-            if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
-            else                pq.insert(w, distTo[w]);     //w is the index in pq, distTo[w] is the key in pq
-            												 //deletemin will extract the min key value which is the shortes distance
+            if (pq.contains(w)) 
+            	pq.decreaseKey(w, distTo[w]);
+            else                
+            	pq.insert(w, distTo[w]);     
+            //w is the index in pq, distTo[w] is the key in pq
+            //deletemin will extract the min key value which is the shortes distance
         }
     }
 
@@ -58,7 +60,27 @@ public class DijkstraSP {
     public boolean hasPathTo(int v) {
         return distTo[v] < Double.POSITIVE_INFINITY;
     }
-
+    
+    public int[] nClosest(int inputN, int StartingID) {
+    	//inputN = 5;
+        int queueN = inputN + 1 ; 
+        int closev = StartingID ;
+        int [] resultG = new int[queueN];
+        
+        if (!queue1.isEmpty()) {
+     	      
+     	   for (int i=0;i< queueN;i++) {
+     		   
+     		        closev =queue1.dequeue();
+     		        resultG[i] = closev; // the first key is the source itself
+     	   			
+     	   }		
+        } else  
+        	System.out.println("emply Queue.");
+        
+        return resultG;
+       
+    }
     // shortest path from s to v as an Iterable, null if no such path
     public Iterable<DirectedEdge> pathTo(int v) {
         if (!hasPathTo(v)) return null;
@@ -120,10 +142,15 @@ public class DijkstraSP {
         }
         return true;
     }
-
-
-    public static void main(String[] args) {
-     
+    
+    public void cleanQueue(){
+    	//clean stack1
+        //for (int i=0;i<queue1.size();i++) 
+         while ( !queue1.isEmpty())
+        	{queue1.dequeue();}
+     	   //stack1.pop();
+          	
     }
+
 
 }

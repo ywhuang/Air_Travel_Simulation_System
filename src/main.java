@@ -1,16 +1,14 @@
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.regex.MatchResult;
 
-
-// need to associate with SQL Path 
 /******
  * @author YiweiHuang
  * 
@@ -21,15 +19,11 @@ import java.util.regex.MatchResult;
  * A menu system
  * 
  * N: the number of the cities
- * 
  * G: the graph computed by the given algorithm in the project guidelines
  * 
  * A balanced search tree st - Key:City ID  Value: City Info
- * 
  * A balanced search tree st2 - Key:State name Value: City Info
- * 
  * A balanced search tree st5 - Key:City ID  Value: In/Out info
- * 
  * 
  * tree st:
  * Key: City ID
@@ -104,97 +98,39 @@ public class main {
 	static ST<Integer, int[]> st5 = new ST<Integer, int[]>();  //blanced stree st5
 	static ST<Integer, ArrayList<Integer>> st6out= new ST<Integer, ArrayList<Integer>>(); 
 	static ST<Integer, ArrayList<Integer>> st7in= new ST<Integer, ArrayList<Integer>>();
+					
 	
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		String NEWLINE = System.getProperty("line.separator");
-		s.append(N);
-		//s.append(a);
-		//for (int n=0; n<N; n++){
-		//	s.append(String.format("%d", n));
-		//}
+	public static void optionA(String filename) {
+		File file = new File(filename);
+		Scanner in = null;
+		try {
+			in = new Scanner(file);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		return s.toString();
-	}
-	
-	
-	public static void printMenu(){
-		
-		System.out.println("======================================");
-		System.out.println("|               MENU                 |");
-		System.out.println("|                                    |");
-		System.out.println("|          YI-WEI HUANG              |");
-		System.out.println("======================================");
-		System.out.println("| Options:                           |");
-		System.out.println("|        a. Load Up txt File         |");
-		System.out.println("|        a1. Load data from Database |");
-		System.out.println("|        b. Search for a State       |");
-		System.out.println("|        c. Search a city            |");
-		System.out.println("|        d. Set Current City(ID)     |");
-		System.out.println("|        e. Show Current City        |");
-		System.out.println("|        f. Find N closest(Geo)      |");
-		System.out.println("|        g. Find N closest(by weight)|");
-		System.out.println("|        h. Find the shortest path   |");
-		System.out.println("|        i. Output Graph             |");
-		System.out.println("|        j. Output to Database       |");
-		System.out.println("|                                    |");
-		System.out.println("|                                    |");
-		System.out.println("|        x. exit                     |");
-		System.out.println("|        m. menu                     |");
-		System.out.println("======================================");
-		
-		
-	}
-	
-	public static int translate (String sw){
-		int sw2 = 10;
-		
-		if (sw.equalsIgnoreCase("a")) sw2 = 1;
-		else if (sw.equalsIgnoreCase("a1")) sw2 = 11 ;
-		else if (sw.equalsIgnoreCase("b")) sw2 = 2 ;
-		else if (sw.equalsIgnoreCase("c")) sw2 = 3 ;
-		else if (sw.equalsIgnoreCase("d")) sw2 = 4 ;
-		else if (sw.equalsIgnoreCase("e")) sw2 = 5 ;
-		else if (sw.equalsIgnoreCase("f")) sw2 = 6 ;
-		else if (sw.equalsIgnoreCase("g")) sw2 = 7 ;
-		else if (sw.equalsIgnoreCase("h")) sw2 = 8 ;
-		else if (sw.equalsIgnoreCase("i")) sw2 = 20 ;
-		else if (sw.equalsIgnoreCase("j")) sw2 = 30 ;
-		else if (sw.equalsIgnoreCase("x")) sw2 = 9 ;
-		else if (sw.equalsIgnoreCase("m")) sw2 = 10 ;
-		
-		return sw2;
-		
-		
-	}
-	public static void testA(String file) {
-		
-		In in = new In(file);
-    		 
-	   //In in;
+		//In in = new In(file);    		 	  
     	 // read one line at a time from file in current directory
     	System.out.println("-----------------------------------------------------------");
         System.out.println("Load up the List ");
         
         try {
-            //in = new In("./test1.txt");
-        	//int N = in.readInt();
-        	N = Integer.parseInt(in.readLine());
-        	System.out.println("N is " + N);
-
-            int i = 0;
+            
+        	N = Integer.parseInt(in.nextLine());
+        	System.out.println("N is " + N);            
             int id=0;
             int outCount = 0;
             int inCount = 0;
-        	while (!in.isEmpty()) {
+        	while (in.hasNext()) {
         		        		
         		String[] info = new String[8];       // create string array to store info of a city
         		info[0] = String.valueOf(id);          // info[0] = id                                
                                
-        		String[] field = in.readLine().trim().split(", "); 
+        		String[] field = in.nextLine().trim().split(", "); 
         		info[1] = field[0];        		
                 
-                in.resetDelimiter();                 // reset Delimiter to space
+                in.useDelimiter("\\s");                 // reset Delimiter to space
                                
                 
                 if (field.length > 1) {             	
@@ -204,8 +140,8 @@ public class main {
                 	info[1] = info[1].substring(0, info[1].length() - 1);
                 }   //info[2] = State                
                 
-                info[3] = in.readLine();                 
-                info[4] = in.readLine();                
+                info[3] = in.nextLine();                 
+                info[4] = in.nextLine();                
                 info[5] = String.valueOf(outCount);                      
                 info[6] = String.valueOf(inCount);                       
                 info[7] = "-";                        
@@ -266,7 +202,7 @@ public class main {
         System.out.println();
 		
 	}
-	private static void testB(String state) {
+	private static void optionB(String state) {
 
 		//==================== option b ============================
         System.out.println("====== b ========");
@@ -289,7 +225,7 @@ public class main {
         } else System.out.println("The data does not contains " + ss);
         System.out.println("=======================");
 	}
-	private static void testC(String city) {
+	private static void optionC(String city) {
 		
 		//=================== option c ================
         System.out.println("====== c ========");
@@ -310,7 +246,7 @@ public class main {
         
 		
 	} 
-	private static void testD(int ccID) {
+	private static void optionD(int ccID) {
 
 		//==================== option d ============================
         System.out.println("====== d ========");
@@ -325,7 +261,7 @@ public class main {
         System.out.println("=================================");
 	}
 	
-	private static void testE() {
+	private static void optionE() {
 		
 		//==================== option e ============================
 	            System.out.println("====== e ========");
@@ -346,7 +282,7 @@ public class main {
 	            System.out.println("=================================");
 	}
 	
-	private static void testF(int neighborN) {
+	private static void optionF(int neighborN) {
 		
 		System.out.println("====== f ========");
 		System.out.println("option f. find nearest N neighborN");
@@ -392,17 +328,11 @@ public class main {
 		  dist = Math.toDegrees(dist);
 		  
 		  dist =Math.round(dist*10000.0)/10000.0;
-		 
-		  //dist = dist * 60 * 1.1515;    //ignore unit, result is not exact, only can be compared
-		 // if (unit == 'K') {
-		 //   dist = dist * 1.609344;
-		 // } else if (unit == 'N') {
-		 //   dist = dist * 0.8684;
-		 //   }		  
+		 	  
 		  return (dist);
 		}
 
-	private static void testG(int closestN) {
+	private static void optionG(int closestN) {
 		
 		//========================== option G  ================
 		System.out.println("====== g. ========");
@@ -410,11 +340,11 @@ public class main {
 			theID = (int)(Math.random()*(N+1)); // if user didn't specify the current city
 			System.out.println("The current city ID is set to be : " + theID);
 		}
-		int ids = theID;
-		int adjustedN = closestN;  //closestN + 1;
-		int[] resultG2 = new int[adjustedN];
-		DijkstraSP2 sp2 = new DijkstraSP2(G, ids);
-		resultG2 = sp2.nClosest(adjustedN, theID);    // the result of G (cityIDs)
+		int ids = theID;		
+		int[] resultG2 = new int[closestN];
+		//DijkstraSP2 sp2 = new DijkstraSP2(G, ids);
+		DijkstraSP sp2 = new DijkstraSP(G, ids);
+		resultG2 = sp2.nClosest(closestN, theID);    // the result of G (cityIDs)
 		System.out.println("The "+ closestN + " closest cities ID are...");
 		for (int i=0;i<resultG2.length;i++){ //start form i=1 since the first closest one is itself
 			System.out.println("id: "+resultG2[i] + " - " + st.get(resultG2[i])[1]);
@@ -424,7 +354,7 @@ public class main {
 		System.out.println("=================================");
 	}
 
-	private static void testH(int destinationID) {
+	private static void optionH(int destinationID) {
 		
 		//================== option h.====================
         System.out.println("====== h. ========"); 
@@ -449,329 +379,363 @@ public class main {
         System.out.println("=================================");
 		
 	}
+	
+	
 		
 	
-public static void main(String[] args) throws IOException {
-	
-	printMenu();
-	
-	//theID = (int);
-	theID = -1; // change to random number later
-	
-	
-	while (true) {	
-	
-
-	
-	System.out.println("Choose your option:   (m for menu)");
-	String swValue = StdIn.readString();
-	
-	
-	int swValue2 = translate(swValue);	
-	
-	
-	switch (swValue2) {
-	 case 1:
-		 System.out.println("Option a selected");
-		 System.out.println("Input the filename");
-		 try {
-		 String file = StdIn.readString();
-		 
-		 System.out.println("Load up " + file+ "...");
-		 long startTime0 = System.currentTimeMillis();
-		 testA(file);
-		 long endTime0   = System.currentTimeMillis();
-		 long totalTime0 = endTime0 - startTime0;
-		 System.out.println("Running Time: " + totalTime0 +"mSec");
+	public static void main(String[] args) throws IOException {
 		
-		 } catch (Exception e) { System.out.println(e); }
-		 
-		 
-		 break;
+		printMenu();
+		
+		//theID = (int);
+		theID = -1; // change to random number later
+		
+		
+		while (true) {	
+		
 	
-	 case 2:
-		 System.out.println("Option b selected");
-		 System.out.println("Input a state");
-		 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-	      String state = null;
-
-		 try {
-		 state = br.readLine();
-		 
-		 System.out.println("List cities of  " + state + "...");
-		 testB(state);
-		 } catch (Exception e) { System.out.println(e); }
-		 break;
-		 
-	 case 3:
-		 System.out.println("Option c selected");
-		 System.out.println("Input a city");
-		 BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in));
-
-	      String city = null;
-
-		 try {
-		 city = br2.readLine();
-		 
-		 System.out.println("Info of  " + city + "...");
-		 testC(city);
-		 } catch (Exception e) { System.out.println(e); }
-		 break;
-		 
-	 case 4:
-		 System.out.println("Option d selected");
-		 System.out.println("Input an ID");
-		 BufferedReader br3 = new BufferedReader(new InputStreamReader(System.in));
-
-	      int ccID = 0;
-
-		 try {
-		 ccID = StdIn.readInt();
-		 
-		 
-		 testD(ccID);
-		 System.out.println("Current City ID is  " + theID + "...");
-		 System.out.println("Current City is  " + theCity + "...");
-		 } catch (Exception e) { System.out.println(e); }
-		 break;
-		 
-	 case 5:	 
-		 System.out.println("Option e selected");
-		 System.out.println("Show current city info");		 
-
-		 System.out.println("ID:" + theID + "...");
-		 
-		 testE();
-
-		 break;
-		 
-	 case 6:	 
-		 System.out.println("Option f selected");
-		 System.out.println("Input N for number of neighbors");		 
-		 
-		 try {
-		  int neighborN = StdIn.readInt();
-
-		 testF(neighborN);
-		 
-		 
-		 
-		 } catch (Exception e) { System.out.println(e); }
-		 break;
-		 
-	 case 7:
-		 System.out.println("OPtion g selected");
-		 System.out.println("Find N closest cities(by weight)");
-		 System.out.println("Input N..");
-		 try {
-			 int closestN = StdIn.readInt();
-			 testG(closestN);
+		
+		System.out.println("Choose your option:   (m for menu)");
+		String swValue = StdIn.readString();
+		
+		
+		int swValue2 = toSwitchNum(swValue);	
+		
+		
+		switch (swValue2) {
+		 case 1:
+			 System.out.println("Option a selected");
+			 System.out.println("Input the filename");
+			 try {
+			 String file = StdIn.readString();
 			 
-		 } catch (Exception e) { System.out.println(e); }
-		 break;
-		 
-	 case 8:
-		 System.out.println("Option h selected");
-		 System.out.println("Find the shortest path");		 
-		 long startTime = System.currentTimeMillis();
-		 try {
-			 System.out.println("Input destination city ID..");
-			 int destinationID = StdIn.readInt();
-
-		 testH(destinationID);
-		 
-		 
-		 
-		 } catch (Exception e) { System.out.println(e); }
-		 long endTime   = System.currentTimeMillis();
-		 long totalTime = endTime - startTime;
-		 System.out.println("Running Time: " + totalTime + "mSec");
-		 break;
-		 
-	 case 9:
-		 System.out.println("Option i selected - Quit");
-		 System.exit(0);
-		 break;
-		 
-	 case 10:
-		 printMenu();
-		 break;
-		 
-	 case 20:
-		 System.out.println("Output the calculated graph in local trees");
-		 //Initialize st6out, st7in trees
-		 for (int i = 0 ; i<N ; i++){
-			 ArrayList<Integer> value = new ArrayList<Integer>();
-			 st6out.put(i, value);
-			 st7in.put(i, value);
-		 }
-		 
-		 for (DirectedEdge e : G.edges()){
-			 //get id
-			 int from = e.from();
-			 int to = e.to();
-			 System.out.println("from: "+from+ " to: "+ to);
+			 System.out.println("Load up " + file+ "...");
+			 long startTime0 = System.currentTimeMillis();
+			 optionA(file);
+			 long endTime0   = System.currentTimeMillis();
+			 long totalTime0 = endTime0 - startTime0;
+			 System.out.println("Running Time: " + totalTime0 +"mSec");
+			
+			 } catch (Exception e) { System.out.println(e); }
 			 
-			 //update
-			 System.out.println("add st6 id:" + from);
-			 ArrayList<Integer> al6c = new ArrayList<Integer> ( st6out.get(from));
-			 if (!al6c.contains(from)) al6c.add(to);
-			 st6out.put(from, al6c);
-			 for (int x1:st6out.get(from)) {
-				 System.out.print(x1 + ", ");
-			 }
-			 System.out.println();
-			 ArrayList<Integer> al7c = new ArrayList<Integer> ( st7in.get(to));
-			 if (!al7c.contains(to)) al7c.add(from);
-			 st7in.put(to, al7c);
-			 for (int x2:st7in.get(to)) {
-				 System.out.print(x2 + ", ");
-			 }
-			 System.out.println();
-		 }
-		 
-		 System.out.println("Full information");
-		 System.out.println("=============");
-		 System.out.println("");
-		 System.out.println("ID");
-		 System.out.println("city name");
-		 System.out.println("State name");
-		 System.out.println("Latitude");
-		 System.out.println("Longitude");
-		 System.out.println("Outbound Count");
-		 System.out.println("Inbound Count");		 
-		 System.out.println("Outbound City ID:");
+			 
+			 break;
 		
-		 System.out.println("Inbound City ID:");
-		 System.out.println();
-		 		 
-		 System.out.println(N);
-		 System.out.println();
-		 System.out.println("Type in the filename for the output file:");
-		 Scanner s = new Scanner(new BufferedInputStream(System.in));
-		 String filename= s.next();
-		 
-		 PrintWriter out = new PrintWriter(new FileWriter(filename));
-		
-		 //city =city.replaceFirst("\'", "\'\'");	
-		 
-		 for (int i = 0 ; i<N ; i++){
-			 String[] info = st.get(i);
+		 case 2:
+			 System.out.println("Option b selected");
+			 System.out.println("Input a state");
+			 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	
+		      String state = null;
+	
+			 try {
+			 state = br.readLine();
+			 
+			 System.out.println("List cities of  " + state + "...");
+			 optionB(state);
+			 } catch (Exception e) { System.out.println(e); }
+			 break;
+			 
+		 case 3:
+			 System.out.println("Option c selected");
+			 System.out.println("Input a city");
+			 BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in));
+	
+		      String city = null;
+	
+			 try {
+			 city = br2.readLine();
+			 
+			 System.out.println("Info of  " + city + "...");
+			 optionC(city);
+			 } catch (Exception e) { System.out.println(e); }
+			 break;
+			 
+		 case 4:
+			 System.out.println("Option d selected");
+			 System.out.println("Input an ID");
+			 BufferedReader br3 = new BufferedReader(new InputStreamReader(System.in));
+	
+		      int ccID = 0;
+	
+			 try {
+			 ccID = StdIn.readInt();
+			 
+			 
+			 optionD(ccID);
+			 System.out.println("Current City ID is  " + theID + "...");
+			 System.out.println("Current City is  " + theCity + "...");
+			 } catch (Exception e) { System.out.println(e); }
+			 break;
+			 
+		 case 5:	 
+			 System.out.println("Option e selected");
+			 System.out.println("Show current city info");		 
+	
+			 System.out.println("ID:" + theID + "...");
+			 
+			 optionE();
+	
+			 break;
+			 
+		 case 6:	 
+			 System.out.println("Option f selected");
+			 System.out.println("Input N for number of neighbors");		 
+			 
+			 try {
+			  int neighborN = StdIn.readInt();
+	
+			 optionF(neighborN);
+			 
+			 
+			 
+			 } catch (Exception e) { System.out.println(e); }
+			 break;
+			 
+		 case 7:
+			 System.out.println("OPtion g selected");
+			 System.out.println("Find N closest cities(by weight)");
+			 System.out.println("Input N..");
+			 try {
+				 int closestN = StdIn.readInt();
+				 optionG(closestN);
+				 
+			 } catch (Exception e) { System.out.println(e); }
+			 break;
+			 
+		 case 8:
+			 System.out.println("Option h selected");
+			 System.out.println("Find the shortest path");		 
+			 long startTime = System.currentTimeMillis();
+			 try {
+				 System.out.println("Input destination city ID..");
+				 int destinationID = StdIn.readInt();
+	
+			 optionH(destinationID);
+			 
+			 
+			 
+			 } catch (Exception e) { System.out.println(e); }
+			 long endTime   = System.currentTimeMillis();
+			 long totalTime = endTime - startTime;
+			 System.out.println("Running Time: " + totalTime + "mSec");
+			 break;
+			 
+		 case 9:
+			 System.out.println("Option i selected - Quit");
+			 System.exit(0);
+			 break;
+			 
+		 case 10:
+			 printMenu();
+			 break;
+			 
+		 case 20:
+			 System.out.println("Output the calculated graph in local trees");
+			 //Initialize st6out, st7in trees
+			 for (int i = 0 ; i<N ; i++){
+				 ArrayList<Integer> value = new ArrayList<Integer>();
+				 st6out.put(i, value);
+				 st7in.put(i, value);
+			 }
+			 
+			 for (DirectedEdge e : G.edges()){
+				 //get id
+				 int from = e.from();
+				 int to = e.to();
+				 System.out.println("from: "+from+ " to: "+ to);
+				 
+				 //update
+				 System.out.println("add st6 id:" + from);
+				 ArrayList<Integer> al6c = new ArrayList<Integer> ( st6out.get(from));
+				 if (!al6c.contains(from)) al6c.add(to);
+				 st6out.put(from, al6c);
+				 for (int x1:st6out.get(from)) {
+					 System.out.print(x1 + ", ");
+				 }
+				 System.out.println();
+				 ArrayList<Integer> al7c = new ArrayList<Integer> ( st7in.get(to));
+				 if (!al7c.contains(to)) al7c.add(from);
+				 st7in.put(to, al7c);
+				 for (int x2:st7in.get(to)) {
+					 System.out.print(x2 + ", ");
+				 }
+				 System.out.println();
+			 }
+			 
+			 System.out.println("Full information");
+			 System.out.println("=============");
 			 System.out.println("");
-			 //System.out.println("ID");
-			 System.out.println(i);
-			 //System.out.println("city name");
-			 System.out.println(info[1]);
-			 //System.out.println("State name");
-			 System.out.println(info[2]);
-			 //System.out.println("Latitude");
-			 System.out.println(info[3]);
-			 //System.out.println("Longitude");
-			 System.out.println(info[4]);
-			 //System.out.println("Outbound Count");
-			 System.out.println(st5.get(i)[0]);			
-			 //System.out.println("Inbound Count");
-			 System.out.println(st5.get(i)[1]);
-			 //System.out.println("Outbound City ID:");
-			 
-			 ArrayList<Integer> oa = st6out.get(i);
-			 for (int x:oa) {
-				 System.out.print(x + ", ");
-			 }
+			 System.out.println("ID");
+			 System.out.println("city name");
+			 System.out.println("State name");
+			 System.out.println("Latitude");
+			 System.out.println("Longitude");
+			 System.out.println("Outbound Count");
+			 System.out.println("Inbound Count");		 
+			 System.out.println("Outbound City ID:");
+			
+			 System.out.println("Inbound City ID:");
 			 System.out.println();
-			 //System.out.println("Inbound City ID:");
-			 ArrayList<Integer> ia = st7in.get(i);
-			 for (int x2:ia) {
-				 System.out.print(x2 + ", ");
-			 }
+			 		 
+			 System.out.println(N);
 			 System.out.println();
+			 System.out.println("Type in the filename for the output file:");
+			 Scanner s = new Scanner(new BufferedInputStream(System.in));
+			 String filename= s.next();
 			 
-			 //out.println();
-			 out.println(i+1);
-			 out.println(info[1].replaceAll("\'", "_"));
-			 out.println(info[2].replaceAll("\'", "_"));
-			 out.println(info[3]);
-			 out.println(info[4]);
-			 out.println(st5.get(i)[0]);
-			 out.println(st5.get(i)[1]);
-			 for (int x:oa) {
-				 out.print(x + ", ");
+			 PrintWriter out = new PrintWriter(new FileWriter(filename));
+			
+			 //city =city.replaceFirst("\'", "\'\'");	
+			 
+			 for (int i = 0 ; i<N ; i++){
+				 String[] info = st.get(i);
+				 System.out.println("");
+				 //System.out.println("ID");
+				 System.out.println(i);
+				 //System.out.println("city name");
+				 System.out.println(info[1]);
+				 //System.out.println("State name");
+				 System.out.println(info[2]);
+				 //System.out.println("Latitude");
+				 System.out.println(info[3]);
+				 //System.out.println("Longitude");
+				 System.out.println(info[4]);
+				 //System.out.println("Outbound Count");
+				 System.out.println(st5.get(i)[0]);			
+				 //System.out.println("Inbound Count");
+				 System.out.println(st5.get(i)[1]);
+				 //System.out.println("Outbound City ID:");
+				 
+				 ArrayList<Integer> oa = st6out.get(i);
+				 for (int x:oa) {
+					 System.out.print(x + ", ");
+				 }
+				 System.out.println();
+				 //System.out.println("Inbound City ID:");
+				 ArrayList<Integer> ia = st7in.get(i);
+				 for (int x2:ia) {
+					 System.out.print(x2 + ", ");
+				 }
+				 System.out.println();
+				 
+				 //out.println();
+				 out.println(i+1);
+				 out.println(info[1].replaceAll("\'", "_"));
+				 out.println(info[2].replaceAll("\'", "_"));
+				 out.println(info[3]);
+				 out.println(info[4]);
+				 out.println(st5.get(i)[0]);
+				 out.println(st5.get(i)[1]);
+				 for (int x:oa) {
+					 out.print(x + ", ");
+				 }
+				 out.println();
+	
+				 for (int x2:ia) {
+					 out.print(x2 + ", ");
+				 }
+				 out.println();
+				 
+				 
 			 }
-			 out.println();
-
-			 for (int x2:ia) {
-				 out.print(x2 + ", ");
-			 }
-			 out.println();
-			 
-			 
-		 }
-		 out.close();
-		 System.out.println();
-		 break;
-		 
-	 case 30:
-		 System.out.println("Output to Database");
-		 
-		 //=== Construst st6 , sy7 =======
-		 for (int i = 0 ; i<N ; i++){
-			 ArrayList<Integer> value = new ArrayList<Integer>();
-			 st6out.put(i, value);
-			 st7in.put(i, value);
-		 }
-		 
-		 for (DirectedEdge e : G.edges()){
-			 //get id
-			 int from = e.from();
-			 int to = e.to();
-			 System.out.println("from: "+from+ " to: "+ to);
-			 
-			 //update
-			 System.out.println("add st6 id:" + from);
-			 ArrayList<Integer> al6c = new ArrayList<Integer> ( st6out.get(from));
-			 if (!al6c.contains(from)) al6c.add(to);
-			 st6out.put(from, al6c);
-			 for (int x1:st6out.get(from)) {
-				 System.out.print(x1 + ", ");
-			 }
+			 out.close();
 			 System.out.println();
-			 ArrayList<Integer> al7c = new ArrayList<Integer> ( st7in.get(to));
-			 if (!al7c.contains(to)) al7c.add(from);
-			 st7in.put(to, al7c);
-			 for (int x2:st7in.get(to)) {
-				 System.out.print(x2 + ", ");
+			 break;
+			 
+		 case 30:
+			 System.out.println("Output to Database");
+			 
+			 //=== Construst st6 , sy7 =======
+			 for (int i = 0 ; i<N ; i++){
+				 ArrayList<Integer> value = new ArrayList<Integer>();
+				 st6out.put(i, value);
+				 st7in.put(i, value);
 			 }
-			 System.out.println();
-		 }
-		 
-		 ExportData_SQL exeFull = new ExportData_SQL();
-		 exeFull.insertFullData(N, st, st5, st6out, st7in);
-		 //exeFull.insertPartData(N, st, st5);
-		 break;
-		 
-	 default:
-		 System.out.println("Invalid Selection - please try again");
-		 printMenu();
-		 break;
-		 
-		 
-		 
+			 
+			 for (DirectedEdge e : G.edges()){
+				 //get id
+				 int from = e.from();
+				 int to = e.to();
+				 System.out.println("from: "+from+ " to: "+ to);
+				 
+				 //update
+				 System.out.println("add st6 id:" + from);
+				 ArrayList<Integer> al6c = new ArrayList<Integer> ( st6out.get(from));
+				 if (!al6c.contains(from)) al6c.add(to);
+				 st6out.put(from, al6c);
+				 for (int x1:st6out.get(from)) {
+					 System.out.print(x1 + ", ");
+				 }
+				 System.out.println();
+				 ArrayList<Integer> al7c = new ArrayList<Integer> ( st7in.get(to));
+				 if (!al7c.contains(to)) al7c.add(from);
+				 st7in.put(to, al7c);
+				 for (int x2:st7in.get(to)) {
+					 System.out.print(x2 + ", ");
+				 }
+				 System.out.println();
+			 }
+			 
+			 ExportData_SQL exeFull = new ExportData_SQL();
+			 exeFull.insertFullData(N, st, st5, st6out, st7in);
+			 //exeFull.insertPartData(N, st, st5);
+			 break;
+			 
+		 default:
+			 System.out.println("Invalid Selection - please try again");
+			 printMenu();
+			 break;			 			 			 
+		}		
+    }	
+ }	
+	public static void printMenu(){
+		
+		System.out.println("======================================");
+		System.out.println("|               MENU                 |");
+		System.out.println("|                                    |");
+		System.out.println("|          YI-WEI HUANG              |");
+		System.out.println("======================================");
+		System.out.println("| Options:                           |");
+		System.out.println("|        a. Load Up txt File         |");		
+		System.out.println("|        b. Search for a State       |");
+		System.out.println("|        c. Search a city            |");
+		System.out.println("|        d. Set Current City(ID)     |");
+		System.out.println("|        e. Show Current City        |");
+		System.out.println("|        f. Find N closest(Geo)      |");
+		System.out.println("|        g. Find N closest(by weight)|");
+		System.out.println("|        h. Find the shortest path   |");
+		System.out.println("|        i. Output Graph             |");
+		System.out.println("|        j. Output to Database       |");
+		System.out.println("|                                    |");
+		System.out.println("|                                    |");
+		System.out.println("|        x. exit                     |");
+		System.out.println("|        m. menu                     |");
+		System.out.println("======================================");
+		
+		
 	}
 	
-
-    }
-
-
- }
-
-
-
-
-
-
-
-
+	public static int toSwitchNum (String sw){
+		int sw2 = 10;
+		
+		if (sw.equalsIgnoreCase("a")) sw2 = 1;
+		else if (sw.equalsIgnoreCase("b")) sw2 = 2 ;
+		else if (sw.equalsIgnoreCase("c")) sw2 = 3 ;
+		else if (sw.equalsIgnoreCase("d")) sw2 = 4 ;
+		else if (sw.equalsIgnoreCase("e")) sw2 = 5 ;
+		else if (sw.equalsIgnoreCase("f")) sw2 = 6 ;
+		else if (sw.equalsIgnoreCase("g")) sw2 = 7 ;
+		else if (sw.equalsIgnoreCase("h")) sw2 = 8 ;
+		else if (sw.equalsIgnoreCase("i")) sw2 = 20 ;		
+		else if (sw.equalsIgnoreCase("j")) sw2 = 30 ;
+		else if (sw.equalsIgnoreCase("x")) sw2 = 9 ;
+		else if (sw.equalsIgnoreCase("m")) sw2 = 10 ;
+		
+		return sw2;
+		
+		
+	}
 	
 }
 

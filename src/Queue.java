@@ -167,10 +167,4 @@ public class Queue<Item> implements Iterable<Item> {
     }
 
 
-   /**
-     * A test client.
-     */
-    public static void main(String[] args) {
-        
-    }
 }

@@ -10,15 +10,6 @@ import java.util.Scanner;
 
 public class ExportData_SQL {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-	
-
 	   // JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   // REMEMBER to add external jar linked to MySQL Connector
@@ -148,11 +139,7 @@ public class ExportData_SQL {
  			String sql = header+ batchValue;
  			stmt.executeUpdate(sql);
 			}
-	      
-	      
-	      
-	      
-	      
+	            
 	      //ResultSet rs = stmt.executeQuery(sql);
 
 	      //STEP 5: Extract data from result set
@@ -307,7 +294,7 @@ public class ExportData_SQL {
 	         se.printStackTrace();
 	      }//end finally try
 	   }//end try
-	   System.out.println("Goodbye!");
+	   System.out.println("SQL close.");
 	}//end main
 
 
