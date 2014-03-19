@@ -20,8 +20,6 @@ import java.util.Collections;
  *  named 0 through V-1, where each edge has a real-valued weight.
  *  It supports the following operations: add an edge to the graph,
  *  iterate over all of edges leaving a vertex.
- *  <p>
- *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  */
 
 
