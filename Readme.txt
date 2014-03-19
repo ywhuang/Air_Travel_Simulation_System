@@ -6,7 +6,7 @@ email: yh2565@columbia.edu
 =======================
 
 Abstract:
-main.java should perform the operations 
+
 
 *********************************************
 main.java
@@ -15,8 +15,34 @@ Compilation: javac main.java
 Execution:     java main
 
  
- * 
-* Content:
+Content:
+A map travel system that can search a particular destination, display city information, 
+,find shortest path based on edge costs or GPS distances.
+
+Menu:
+  System.out.println("======================================");
+		System.out.println("|               MENU                 |");
+		System.out.println("|                                    |");
+		System.out.println("|          YI-WEI HUANG              |");
+		System.out.println("======================================");
+		System.out.println("| Options:                           |");
+		System.out.println("|        a. Load Up txt File         |");		
+		System.out.println("|        b. Search for a State       |");
+		System.out.println("|        c. Search a city            |");
+		System.out.println("|        d. Set Current City(ID)     |");
+		System.out.println("|        e. Show Current City        |");
+		System.out.println("|        f. Find N closest(GPS)      |");
+		System.out.println("|        g. Find N closest(by weight)|");
+		System.out.println("|        h. Find the shortest path   |");
+		System.out.println("|        i. Output Graph to txt      |");
+		System.out.println("|        j. Sync to MySql            |");
+		System.out.println("|                                    |");
+		System.out.println("|                                    |");
+		System.out.println("|        x. exit                     |");
+		System.out.println("|        m. menu                     |");
+		System.out.println("======================================");
+Choose your option:   (m for menu)
+
  *  
  * A menu system
  * 
@@ -37,7 +63,7 @@ Execution:     java main
  * st.Value[1]:City Name
  * st.Value[2]:State of the city
  * st.Value[3]:Latitude of the City
- * st.Value[4]:Longitude of the City  (Regardless the correctness of the worldcities.txt data)
+ * st.Value[4]:Longitude of the City  
  * st.Value[5]:Reserved
  * st.Value[6]:Reserved
  * st.Value[7]:Reserved
@@ -78,60 +104,18 @@ Execution:     java main
  * Readme.txt 
  * 
  
-
-Menu System:
-
-======================================
-|               MENU                 
-======================================
-| Options:                                       
-|        a. Load Up File                  
-|        b. Search for a State         
-|        c. Search a city                   
-|        d. Set Current City(ID)       
-|        e. Show Current City          
-|        f. Find N closest(Geo)        
-|        g. Find N closest(by weight)
-|        h. Find the shortest path   
-|                                                      
-|        i. exit                                    
-|        m. menu                              
-======================================
-Choose your option:   (m for menu)
->  (User input)
-
-- 4 major classes support the mainf2012 operation.
 /*************************************************************************
 MyGraphMap.java
   
  *  An edge-weighted digraph, implemented using adjacency lists.
- *  Reference:
- *  The code below is modified from the book, Algorithms, 4th Edition,
- *  by Robert Sedgewick and Kevin Wayne.
- *  For more info: http://algs4.cs.princeton.edu/
  *  The MyGraphMap class represents an directed graph of vertices
  *  named 0 through V-1, where each edge has a real-valued weight.
  *  It supports the following operations: add an edge to the graph,
  *  iterate over all of edges leaving a vertex.
 Running Time: O(8*N)   
 /*************************************************************************
-DijkstraSP2.java
 
- *  Support item G - Find n closest city by weight
- *  In this class, we use a binary heap for priority queue operations (IndexMinPQ.java)
- *  Thus to achieve the running time for (N log N)
- *  Compilation:  javac DijkstraSP2.java
- *  
- *  Dependencies: MyGraphMap.java IndexMinPQ.java Stack.java DirectedEdge.java
- *  
- *
- *  Dijkstra's algorithm. Computes the shortest path tree.
- *  Assumes all weights are nonnegative.
- *  The code below is modified from the book, Algorithms, 4th Edition,
- *  by Robert Sedgewick and Kevin Wayne.
- *  For more info, see http://algs4.cs.princeton.edu/
- *
-Running Time: O((N+E) lg N)
+
  *************************************************************************/
 DijkstraSP.java
  *  Similar to DijkstraSP2.java
@@ -145,9 +129,6 @@ DijkstraSP.java
  *
  *  Dijkstra's algorithm. Computes the shortest path tree.
  *  Assumes all weights are nonnegative.
- *  The code below is modified from the book, Algorithms, 4th Edition,
- *  by Robert Sedgewick and Kevin Wayne.
- *  For more info, see http://algs4.cs.princeton.edu/
  *
 Running Time: O((N+E) lg N)
  *************************************************************************/
@@ -175,9 +156,6 @@ ST.java
  *  The put, contains, remove, minimum,
  *  maximum, ceiling, and floor methods take
  *  logarithmic time.
- *  
- *  For additional documentation, see
- *  Algorithms, 4th Edition by Robert Sedgewick and Kevin Wayne.
 
 The operation of search/input/delete: O(lgN)
  * option a,b,c,d,e use ST.java O(lgN)
@@ -202,10 +180,6 @@ Auxiliary classes
   Graph.java
   DirectedEdge.java
 
-
- *  All Auxiliary classes are modified from the book, Algorithms, 4th Edition,
- *  by Robert Sedgewick and Kevin Wayne.
- *  see http://algs4.cs.princeton.edu/
 
   
  
