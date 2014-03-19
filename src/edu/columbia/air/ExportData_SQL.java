@@ -15,7 +15,7 @@ public class ExportData_SQL {
 
 	   // JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   // REMEMBER to add external jar linked to MySQL Connector
+	   // REMEMBER to add external jar
 	   
 	   static final String DB_URL = "jdbc:mysql://localhost/city_test100_1";
 	   //static final String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
@@ -297,7 +297,7 @@ public class ExportData_SQL {
 	         se.printStackTrace();
 	      }//end finally try
 	   }//end try
-	   System.out.println("SQL close.");
+	   System.out.println("MySQL closed.");
 	}//end main
 
 
