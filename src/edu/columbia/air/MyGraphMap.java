@@ -11,10 +11,6 @@ import java.util.Collections;
  *  Execution:    java MyGraphMap V E
  *  Dependencies: Bag.java DirectedEdge.java
  *
- *  An edge-weighted digraph, implemented using adjacency lists.
- *  Reference:
- *  The code below is modified from the book, Algorithms, 4th Edition,by Robert Sedgewick and Kevin Wayne.
- *  For more info: http://algs4.cs.princeton.edu/
  *  
  *
  *************************************************************************/
@@ -92,15 +88,15 @@ public class MyGraphMap {
     		int v = i;                          
     		for (int i3 = 0; i3 < r1 ; i3++ ){    	
     			
-    			//System.out.println("i3 = " + i3 );  // debug
+    			
     			r2++;
     			if (r2 >= V) {//System.out.println("r2 >= V");
     			r2 = r2 - V ;   
     			}     			// constantly check if random number r2 out of bound    			
     			
     			int w = numbers.get(r2);                // w is determined from Lottery(r2)
-    			//System.out.println("after w is determined r2 = " + r2 );    // for debug
-    			//System.out.println(">>add destination = " + w + "<<");   // for debug 
+    			//System.out.println("after w is determined r2 = " + r2 );    
+    			//System.out.println(">>add destination = " + w + "<<");   
     			//System.out.println(); 
     			
     			
@@ -108,12 +104,8 @@ public class MyGraphMap {
     			//System.out.println("r2 >= V"); 
     			r2 = r2 - V ;        
     			}       // constantly check if random number r2 out of bound   
-    			//System.out.println("r2.3 = " + r2 );    // for debug
-    			//System.out.println(); 
-    			
     			
     			while (v == w) {
-    				//System.out.println(" v = w = " + v ); //for debug 
     				int r3 = r2 +1;
     				if (r3 >= V) { 
     				//System.out.println("r3 >= V");
