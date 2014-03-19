@@ -92,14 +92,14 @@ import edu.columbia.air.helper.ST;
 public class main {
 	
 	private static int N;
-	private static int theID ; // make default random number if user not put in an N 
+	private static int theID ; // default random number 
 	private static String theCity;
 	public static MyGraphMap G;
 	
-	static ST<Integer, String[]> st = new ST<Integer, String[]>(); //blanced stree st
-	static ST<String, String[]> st2 = new ST<String, String[]>();  //blanced stree st2
-	static ST<String, String[]> st3 = new ST<String, String[]>();  //blanced stree st3
-	static ST<Integer, int[]> st5 = new ST<Integer, int[]>();  //blanced stree st5
+	static ST<Integer, String[]> st = new ST<Integer, String[]>(); //blanced tree st using java TreeMap
+	static ST<String, String[]> st2 = new ST<String, String[]>();  //blanced tree st2
+	static ST<String, String[]> st3 = new ST<String, String[]>();  //blanced tree st3
+	static ST<Integer, int[]> st5 = new ST<Integer, int[]>();  //blanced tree st5
 	static ST<Integer, ArrayList<Integer>> st6out= new ST<Integer, ArrayList<Integer>>(); 
 	static ST<Integer, ArrayList<Integer>> st7in= new ST<Integer, ArrayList<Integer>>();
 					
@@ -110,7 +110,6 @@ public class main {
 		try {
 			in = new Scanner(file);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 				        
@@ -148,8 +147,8 @@ public class main {
                 st.put(id, info);                  //st key=id                
                 st3.put(info[1], info);            //st3 key = city
                 
-                String[] cities = new String[101];    //st2 key = State (Assume each State has max 101 cities)
-                									//create array for cities in the state
+                String[] cities = new String[101];    //st2 key = State (Assume each State has max of 101 cities)
+                		                      //create array for cities in the state
                 cities[0] = "1";
                
                 if (st2.contains(info[2])) {                	
@@ -179,7 +178,7 @@ public class main {
             System.out.println();
                      
             //================== construct Graph====================
-            System.out.println("======Construct Graph========");  // should change 2~8 random number s later
+            System.out.println("======Construct Graph========");  
             
             G = new MyGraphMap(N,0); // == MyGraphMap(N)
 
