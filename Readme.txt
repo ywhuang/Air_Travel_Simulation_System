@@ -20,7 +20,7 @@ A map travel system that can search a particular destination, display city infor
 ,find shortest path based on edge costs or GPS distances.
 
 Menu:
-  System.out.println("======================================");
+                System.out.println("======================================");
 		System.out.println("|               MENU                 |");
 		System.out.println("|                                    |");
 		System.out.println("|          YI-WEI HUANG              |");
@@ -167,17 +167,11 @@ The operation of search/input/delete: O(lgN)
 
  *************************************************************************/
 
-Auxiliary classes
- Data Structures:
+Auxiliary classes:
   Bag.java
   Stack.java
   Queue.java
   IndexMinPQ.java
- Input/OutPut:
-  In.java
-  StdIn.java
-  StdOut.java
-  Graph.java
   DirectedEdge.java
 
 
