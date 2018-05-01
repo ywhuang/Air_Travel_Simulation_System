@@ -1,8 +1,7 @@
 README.TXT
 ====================
 
-Name:Yi-Wei Huang
-email: yh2565@columbia.edu
+
 =======================
 
 Abstract:
